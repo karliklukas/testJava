@@ -10,26 +10,8 @@ public class Tree<E extends Comparable<? super E>> implements Iterable<E> {
     private Node<E> root;
     
     public Tree() {
-    }
+    }  
     
-    @Override
-    public Iterator<E> iterator() {
-        List<E> list = new ArrayList<>();
-        BiConsumer<BiConsumer, Node<E>> cf = (f, c) -> {
-            if (c.left != null) {
-                f.accept(f, c.left);
-            }
-            list.add(c.data);
-
-            if (c.right != null) {
-                f.accept(f, c.right);
-            }
-        };
-
-        cf.accept(cf, root);
-        return list.iterator();
-    }
-
     private static class Node<E> {
 
         public Node<E> left;
@@ -167,6 +149,24 @@ public class Tree<E extends Comparable<? super E>> implements Iterable<E> {
         }
 
         return null;
+    }
+    
+    @Override
+    public Iterator<E> iterator() {
+        List<E> list = new ArrayList<>();
+        BiConsumer<BiConsumer, Node<E>> actualLeaf = (f, node) -> {
+            if (node.left != null) {
+                f.accept(f, node.left);
+            }
+            list.add(node.data);
+
+            if (node.right != null) {
+                f.accept(f, node.right);
+            }
+        };
+
+        actualLeaf.accept(actualLeaf, root);
+        return list.iterator();
     }
 
     @Override

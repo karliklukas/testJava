@@ -8,7 +8,6 @@ public class Event implements Comparable<Event>, Serializable {
 
     private Date date;
     private String title;
-    private String text;
 
     public Event(Date date, String title) {
         this.date = date;
@@ -16,23 +15,21 @@ public class Event implements Comparable<Event>, Serializable {
     }
 
     @Override
-    public int compareTo(Event o) {
-        return date.compareTo(o.date);
+    public int compareTo(Event event) {
+        return date.compareTo(event.date);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object object) {
+        if (object == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (getClass() != object.getClass()) {
             return false;
         }
-        final Event other = (Event) obj;
-        if (!Objects.equals(this.date, other.date)) {
-            return false;
-        }
-        return true;
+        final Event event = (Event) object;
+        
+        return Objects.equals(this.date, event.date);
     }
 
     public Date getDate() {
@@ -43,20 +40,14 @@ public class Event implements Comparable<Event>, Serializable {
         return title;
     }
 
-    public String getText() {
-        return text;
-    }
-
     @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.date);
-        return hash;
+    public int hashCode() {        
+        return 97 * 5 + Objects.hashCode(this.date);
     }
 
     @Override
     public String toString() {
-        return "Event{" + "date=" + date + ", title=" + title + ", text=" + text + '}';
+        return "Event{" + "date=" + date + ", title=" + title + '}';
     }
 
 }

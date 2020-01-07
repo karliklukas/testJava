@@ -11,8 +11,10 @@ import java.util.List;
 
 public class Storage {
 
+    private final String FILEPATH = "./storage";
+
     public void store(Object object) {
-        File storage = new File("./storage");
+        File storage = new File(FILEPATH);
         storage.mkdir();
 
         File classFolder = new File(storage.getAbsolutePath() + "/" + object.getClass().getName());
@@ -23,15 +25,21 @@ public class Storage {
         try {
             objectOutputStream = new ObjectOutputStream(new FileOutputStream(objectFile));
             objectOutputStream.writeObject(object);
-            objectOutputStream.close();
+
         } catch (IOException ex) {
             System.err.println("File output err.");
+        }
+
+        try {
+            objectOutputStream.close();
+        } catch (IOException ex) {
+            System.err.println("File not closed.");
         }
 
     }
 
     public void unstore(Object object) {
-        File storage = new File("./storage");
+        File storage = new File(FILEPATH);
 
         File classFolder = new File(storage.getAbsolutePath() + "/" + object.getClass().getName());
 
@@ -40,26 +48,27 @@ public class Storage {
     }
 
     public <T> List<T> load(Class<T> clazz) {
-        File storage = new File("./storage");
+        File storage = new File(FILEPATH);
         File classFolder = new File(storage.getAbsolutePath() + "/" + clazz.getName());
 
         List<T> list = new ArrayList<>();
         File[] files = classFolder.listFiles();
 
         for (File file : files) {
-            ObjectInputStream ois = null;
+            ObjectInputStream objectInputStream = null;
             try {
-                ois = new ObjectInputStream(new FileInputStream(file));
+                objectInputStream = new ObjectInputStream(new FileInputStream(file));
+                list.add((T) objectInputStream.readObject());
             } catch (IOException ex) {
-            }
-            try {
-                list.add((T) ois.readObject());
-            } catch (IOException ex) {
+                System.err.println("File err.");
             } catch (ClassNotFoundException ex) {
+                System.err.println("Class not found err.");
             }
+
             try {
-                ois.close();
+                objectInputStream.close();
             } catch (IOException ex) {
+                System.err.println("File not closed.");
             }
         }
 
