@@ -1,53 +1,38 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package calendar;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
-/**
- *
- * @author rodi0878
- */
-public class Calendar implements Iterable<ESet>{
+public class Calendar implements Iterable<EventSet> {
 
     @Override
-    public Iterator<ESet> iterator() {
+    public Iterator<EventSet> iterator() {
         return calendar.iterator();
     }
-    
-    
-    private Tree<ESet> calendar;
+
+    private Tree<EventSet> calendar;
 
     public Calendar() {
         calendar = new Tree<>();
     }
-    
-    
-    
-    public void addEv(Event ev) {
-        ESet es = new ESet(ev.getDate());
-        if (calendar.contaix(es)) {
-            es = calendar.get(es);
+
+    public void addEvent(Event event) {
+        EventSet es = new EventSet(event.getDate());
+        if (calendar.contain(es)) {
+            es = calendar.getData(es);
         } else {
             calendar.add(es);
         }
-        
-        es.evset.add(ev);
+
+        es.eventSet.add(event);
     }
-    
-    public ESet eventsList(Date date) {
-        return calendar.get(new ESet(date));
+
+    public EventSet eventsList(Date date) {
+        return calendar.getData(new EventSet(date));
     }
-    
-    public void DeleteAll(Date date) {
-        calendar.erase(new ESet(date));
+
+    public void deleteAll(Date date) {
+        calendar.erase(new EventSet(date));
     }
-    
-    
+
 }

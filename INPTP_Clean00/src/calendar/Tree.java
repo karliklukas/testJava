@@ -7,16 +7,20 @@ import java.util.function.BiConsumer;
 
 public class Tree<E extends Comparable<? super E>> implements Iterable<E> {
 
+    private Node<E> root;
+    
+    public Tree() {
+    }
+    
     @Override
     public Iterator<E> iterator() {
         List<E> list = new ArrayList<>();
         BiConsumer<BiConsumer, Node<E>> cf = (f, c) -> {
-           if (c.left != null) {
+            if (c.left != null) {
                 f.accept(f, c.left);
             }
             list.add(c.data);
 
-            
             if (c.right != null) {
                 f.accept(f, c.right);
             }
@@ -44,14 +48,7 @@ public class Tree<E extends Comparable<? super E>> implements Iterable<E> {
             return "Node{" + "left=" + left + ", right=" + right + ", data=" + data + '}';
         }
 
-    }
-
-    
-
-    public Tree() {
-    }
-    
-    private Node<E> root;
+    }   
 
     public void add(E data) {
         if (root == null) {
@@ -136,7 +133,7 @@ public class Tree<E extends Comparable<? super E>> implements Iterable<E> {
         }
     }
 
-    public boolean contaix(E data) {
+    public boolean contain(E data) {
         Node<E> traveller = root;
 
         while (traveller != null) {
@@ -154,7 +151,7 @@ public class Tree<E extends Comparable<? super E>> implements Iterable<E> {
         return false;
     }
 
-    public E get(E data) {
+    public E getData(E data) {
         Node<E> traveller = root;
 
         while (traveller != null) {

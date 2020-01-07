@@ -4,31 +4,21 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author Roman
- */
 public class Event implements Comparable<Event>, Serializable {
 
     private Date date;
     private String title;
-  
-
-    @Override
-    public int compareTo(Event o) {
-        return date.compareTo(o.date);
-    }
+    private String text;
 
     public Event(Date date, String title) {
         this.date = date;
         this.title = title;
     }
 
+    @Override
+    public int compareTo(Event o) {
+        return date.compareTo(o.date);
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -44,9 +34,7 @@ public class Event implements Comparable<Event>, Serializable {
         }
         return true;
     }
-    
-    private String text;
-  
+
     public Date getDate() {
         return date;
     }
@@ -65,6 +53,7 @@ public class Event implements Comparable<Event>, Serializable {
         hash = 97 * hash + Objects.hashCode(this.date);
         return hash;
     }
+
     @Override
     public String toString() {
         return "Event{" + "date=" + date + ", title=" + title + ", text=" + text + '}';
