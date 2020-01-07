@@ -1,5 +1,8 @@
-package calendar;
+package main;
 
+import calendar.Calendar;
+import calendar.Event;
+import calendar.EventSet;
 import java.util.Date;
 import java.util.List;
 import persistence.Storage;
